@@ -1,0 +1,153 @@
+
+-----------------------------------------------------------------------------
+Program-1
+------------------------------------------------------------------------------
+
+
+//Header file
+...............
+
+import React from 'react'
+
+const Header=()=>{
+    return(
+    <div>
+    <center>
+    <h1>Naresh I Technologies</h1>
+    </center>
+    </div>
+    )
+}
+
+export default Header;
+
+
+//Footer file
+...............................
+
+import React from 'react'
+import Header from './Header'
+
+const Footer=()=>{
+    return(
+        <div>
+        <hr/>
+        <h1>Developed By Md Eesha</h1>
+        </div>
+    )
+}
+
+export default Footer;
+
+
+/index.js
+---------------------------
+
+import React from 'react'
+import Header from './Header'
+import Footer from './Footer'
+import ReactDOM, { render } from 'react-dom';
+
+const Home=()=>{
+    return(
+        <div>
+        <Header/>
+        <hr/>
+
+        <h1>This is My First Application in React Js</h1>
+        <Footer/>
+        </div>
+    )
+}
+
+ReactDOM.render(<Home/>,document.getElementById('root'));
+
+
+--------------------------------------------------------------------------------
+Program-2
+-------------------------------------------------------------------------------------------
+
+Header.js
+----------
+import React,{Component,Fragment} from 'react'
+import ReactDOM from 'react-dom';
+import './Header.css';
+
+class Header extends Component{
+        constructor(){
+        super()
+        this.state={
+            title:'My App',
+            userInput:'User Input Text Here'
+        }
+    }
+
+    handleChnage=(event)=>{
+        this.setState({userInput:event.target.value?event.target.value:'User Input Text Here'})
+    }
+    
+    render(){    
+    return(
+    <Fragment>
+    <header>
+    <center>
+    <h1>Naresh I Technologies</h1>
+    <div><input onChange={this.handleChnage}/></div>
+    <div> {this.state.userInput}</div>
+    </center>
+    </header>
+    </Fragment>
+    )
+}
+}
+
+export default Header;
+
+--------------------------------------------------------
+
+Footer.js
+----------
+import React,{Fragment} from 'react'
+
+const Footer=()=>{
+    return(
+        <Fragment>
+        <center>
+        <hr/>
+        <span>Developed By Md Eesha</span>
+        </center>
+        </Fragment>
+    )
+}
+
+export default Footer;
+--------------------------------------------------
+
+index.js
+--------------
+import React from 'react'
+import Header from './component/Header'
+import Footer from './component/Footer'
+import ReactDOM, { render } from 'react-dom';
+
+const Home=()=>{
+    return(
+        <div>
+        <Header/>
+        <hr/>
+
+        <h1>This is My First Application in React Js</h1>
+        <Footer/>
+        </div>
+    )
+}
+
+ReactDOM.render(<Home/>,document.getElementById('root'));
+-------------------------------------------------------------
+
+
+
+
+
+
+
