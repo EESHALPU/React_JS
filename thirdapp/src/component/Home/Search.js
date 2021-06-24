@@ -1,99 +1,101 @@
-import React,{Component} from 'react';
+import React, {Component} from 'react';
+import {withRouter} from 'react-router-dom';
 import './Search.css';
 
-const cityUrl="https://developerfunnel.herokuapp.com/location";
-const hotelUrl="https://developerfunnel.herokuapp.com/hotels?city=";
+const cityUrl = "https://developerfunnel.herokuapp.com/location";
+const hotelUrl = "https://developerfunnel.herokuapp.com/hotels?city="
 
 class Search extends Component{
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
+        console.log(">>>>>in constructor")
         this.state={
-            location:''
+            location:'',
+            hotels:''
         }
     }
 
-    renderCity=(data)=>{
-    if(data){
-        return data.map((item)=>{        
-            return(
-                <option value={item._id}>
-                {item.city_name} 
-                </option>
-            )
-        })
-            
+    renderCity = (data) => {
+        if(data){
+            return data.map((item) => {
+                return(
+                    <option value={item._id}>
+                        {item.city_name}
+                    </option>
+                )
+            })
+        }
     }
-    
-    
-}
 
-
-renderHotels=(data)=>{
-    if(data){
-        return data.map((item)=>{        
-            return(
-                <option value={item._id}>
-                {item.name} | {item.locality}
-                </option>
-            )
-        })
-            
+    renderHotel = (data) => {
+        if(data){
+            return data.map((item) => {
+                return(
+                    <option value={item._id}>
+                        {item.name} | {item.locality}
+                    </option>
+                )
+            })
+        }
     }
-    
-    
-}
 
-handleCity=(event)=>{
-    console.log(event.target.value);
-    const cityId=event.target.value;
-    fetch(hotelUrl+cityId,{method:'GET'})
-    .then((res)=>res.json())
-    .then((data)=>{
-        this.setState({hotels:data})
-    })
+    handleCity = (event) => {
+        console.log(event.target.value)
+        const cityId = event.target.value;
+        fetch(`${hotelUrl}${cityId}`,{method:'GET'})
+        .then((res) => res.json())
+        .then((data) => {
+            this.setState({hotels:data})
+        })
+    }
 
-}
+    handleHotel = (event) => {
+        this.props.history.push(`/details/${event.target.value}`)
+    }
 
     render(){
-        console.log("====>In render===>",this.state.location)
+        console.log(">>>in search",this.props)
+        // console.log(">>>>>in render>>>", this.state.location)
         return(
             <div className="imageContainer">
-            <div id='logo'>
-               D!
-            </div>
-            <div className="heading">
-            Plan Trip with Us
-            </div>
-            <div className="locationSelector">
-            <select className="locationDropDown" onChange={this.handleCity}>
-            <option>--------Select City--------</option> 
-                {this.renderCity(this.state.location)}
-            </select>
-
-            <select className="hotelDropDown">
-            <option>--------Select Hotel--------</option> 
-            {this.renderHotels(this.state.hotels)}
-            </select>
-            </div>
-
-
+                <div id="logo">
+                    D!
+                </div>
+                <div className="heading">
+                    Plan Trip With Us
+                </div>
+                <div className="locationSelector">
+                    <select className="locationDropDown" onChange={this.handleCity}>
+                        <option>----SELECT CITY-----</option>
+                        {this.renderCity(this.state.location)}
+                    </select>
+                    <select className="hotelDropDown" onChange={this.handleHotel}>
+                        <option>----SELECT HOTEL-----</option>
+                        {this.renderHotel(this.state.hotels)}
+                    </select>
+                </div>
             </div>
         )
     }
-    componentDidMount(){
-        fetch(cityUrl,{method:'GET'})
-        .then((res)=>res.json())
 
-        .then((data)=>{
+    ///on page load call api
+    componentDidMount(){
+        console.log(">>>>>in componentDidMount")
+        // we get the data and update the state
+        fetch(cityUrl, {method:'GET'})
+        // return the promise here
+        .then((res) => res.json())
+        // get the data
+        .then((data) => {
+            // setting data in state
             this.setState({location:data})
         })
-
-        .catch((err)=>{
+        // error handling
+        .catch((err) => {
             console.log(err)
         })
     }
+
 }
 
-
-
-export default Search;
+export default withRouter(Search);

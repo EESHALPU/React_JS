@@ -1,0 +1,18 @@
+{
+  "booking": [
+    {
+      "id": 31276,
+      "hotel_name": "The Piccadily",
+      "name": "Aakash",
+      "phone": "786876",
+      "cost": "5170"
+    },
+    {
+      "id": 54569,
+      "hotel_name": "DoubleTree by Hilton",
+      "name": "Bhumika",
+      "phone": "75765656",
+      "cost": "2419"
+    }
+  ]
+}
